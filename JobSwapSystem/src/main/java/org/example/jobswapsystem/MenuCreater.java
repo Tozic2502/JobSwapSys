@@ -23,6 +23,12 @@ public class MenuCreater {
     Label homeLbl   = makeTab("Home");
     Label matchesLbl= makeTab("Matches");
     Label searchLbl = makeTab("Search");
+    private Label nameLabel = new Label();
+    private Label emailLabel = new Label();
+    private Label jobLabel = new Label();
+    private Label companyLabel = new Label();
+    private Label locationLabel = new Label();
+
 
 
     public void createHomeScreen(){
@@ -66,11 +72,11 @@ public class MenuCreater {
         VBox rightBox = new VBox(10);
         rightBox.setPadding(new Insets(20));
         rightBox.getChildren().addAll(
-                new Label("Name: "),
-                new Label("Email: "),
-                new Label("Job position: "),
-                new Label("Company: "),
-                new Label("Location: ")
+                new Label("Name: "), nameLabel,
+                new Label("Email: "), emailLabel,
+                new Label("Job position: "), jobLabel,
+                new Label("Company: "), companyLabel,
+                new Label("Location: "), locationLabel
         );
         rightBox.setStyle("-fx-border-color: #aaa; -fx-border-width: 1;");
         rightBox.setPrefWidth(250);
@@ -107,7 +113,6 @@ public class MenuCreater {
         ChoiceBox<String> areaCodeCB = new ChoiceBox<>();
         areaCodeCB.getItems().addAll("1000", "2000", "3000");
 
-        Label userInfo = new Label("Logged in as: John Doe\nCurrent: Developer @ Acme");
         Button confirmBtn = new Button("Confirm");
         ListView<String> resultsList = new ListView<>();
         /*
@@ -136,7 +141,6 @@ public class MenuCreater {
                 jobTitleCB,
                 distanceCB,
                 areaCodeCB,
-                userInfo,
                 confirmBtn
         );
         form.setPadding(new Insets(20));
@@ -154,6 +158,14 @@ public class MenuCreater {
         searchContainer.setPadding(new Insets(20));
         root.setCenter(searchContainer);
     }
+    public void setCurrentUser(User user) {
+        nameLabel.setText(user.getName());
+        emailLabel.setText(user.getEmail());
+        jobLabel.setText(user.getJobTitle());
+        companyLabel.setText(user.getCompanyName());
+        locationLabel.setText(user.getLocation());
+    }
+
 }
 
 
