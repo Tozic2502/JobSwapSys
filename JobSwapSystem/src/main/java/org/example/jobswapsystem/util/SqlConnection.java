@@ -57,9 +57,13 @@ public class SqlConnection
     {
         try
         {
-            if (instance == null || instance.getConnection().isClosed())
+            if (instance == null || con == null)
             {
                 instance = new SqlConnection();
+                instance.init();
+            }
+            else if (instance.getConnection().isClosed())
+            {
                 instance.init();
             }
         }
