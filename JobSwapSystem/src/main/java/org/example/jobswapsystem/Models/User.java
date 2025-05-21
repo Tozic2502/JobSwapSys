@@ -1,5 +1,5 @@
 package org.example.jobswapsystem.Models;
-
+//Mikkel
 public class User {
     private int userID;
     private String email;

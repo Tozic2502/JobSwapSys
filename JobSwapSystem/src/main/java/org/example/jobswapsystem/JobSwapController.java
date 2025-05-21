@@ -8,7 +8,7 @@ import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.Service.MatchService;
 import org.example.jobswapsystem.Service.UserService;
 import org.example.jobswapsystem.util.SqlConnection;
-
+//Mikkel
 public class JobSwapController {
     MatchService matchService = new MatchService();
     User currentUser = new User();
@@ -17,9 +17,6 @@ public class JobSwapController {
     BorderPane root = menu.root;
 
     @FXML TextField emailTextField, passwordTextField;
-
-
-
     @FXML GridPane startScreen;
 
 
@@ -54,6 +51,7 @@ public class JobSwapController {
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
             menu.createHomeScreen();
+            menu.setJobTitle(currentUser.getJobTitle());
         } else {
             System.out.println("Wrong credentials");
         }

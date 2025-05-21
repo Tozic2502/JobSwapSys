@@ -1,11 +1,9 @@
 package org.example.jobswapsystem;
 
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -104,8 +102,7 @@ public class MenuCreater {
         return lbl;
     }
     public void searchScreen(){
-        ChoiceBox<String> jobTitleCB = new ChoiceBox<>();
-        jobTitleCB.getItems().addAll("Developer", "Designer", "Manager");
+        jobTitleCB = new ChoiceBox<>();
 
         ChoiceBox<String> distanceCB = new ChoiceBox<>();
         distanceCB.getItems().addAll("5 km", "10 km", "20 km");
@@ -165,6 +162,15 @@ public class MenuCreater {
         companyLabel.setText(user.getCompanyName());
         locationLabel.setText(user.getLocation());
     }
+    public void setJobTitle(String jobTitle) {
+        if (jobTitleCB != null && !jobTitleCB.getItems().contains(jobTitle)) {
+            jobTitleCB.getItems().clear();
+            jobTitleCB.getItems().add(jobTitle);
+            jobTitleCB.setValue(jobTitle);
+        }
+    }
+
+
 
 }
 
