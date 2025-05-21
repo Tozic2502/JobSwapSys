@@ -15,6 +15,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+import java.sql.SQLException;
+import java.sql.SQLOutput;
+
 public class JobSwapController {
     MatchService matchService = new MatchService();
     User currentUser = new User();
@@ -52,13 +55,14 @@ public class JobSwapController {
         menu.homeLbl.setOnMouseClicked(e -> menu.createHomeScreen());
     }
     @FXML
-    public void onActionloginButton() {
+    public void onActionloginButton() throws SQLException {
         User loggedInUser = userService.login(emailTextField.getText(), passwordTextField.getText());
         if (loggedInUser != null) {
             this.currentUser = loggedInUser;
-            menu.setCurrentUser(loggedInUser);
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
+            userService.getUserDetails(currentUser.getUserID());
+            menu.setCurrentUser(loggedInUser);
             menu.createHomeScreen();
         } else {
             System.out.println("Wrong credentials");
