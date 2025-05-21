@@ -49,7 +49,7 @@ public class UserService {
         return null; // Login failed
     }
 
-    public String getJobTitleByUserId(int userId) {
+    public void getJobTitleByUserId(int userId) {
         String jobTitle = "Unknown";
 
         try (Connection conn = SqlConnection.getInstance()) {
@@ -58,7 +58,11 @@ public class UserService {
                 stmt.setInt(1, userId);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        jobTitle = rs.getString("Title");
+                        User user = new User();
+                        user.setJobTitle(rs.getString("Job_Title"));
+                        jobTitle = user.getJobTitle();
+                        System.out.println(jobTitle);
+
                     }
                 }
             }
@@ -66,7 +70,6 @@ public class UserService {
             System.err.println("Failed to get job title: " + e.getMessage());
         }
 
-        return jobTitle;
     }
 
 }
