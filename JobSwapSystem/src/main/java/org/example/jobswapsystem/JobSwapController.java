@@ -8,6 +8,12 @@ import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.Service.MatchService;
 import org.example.jobswapsystem.Service.UserService;
 import org.example.jobswapsystem.util.SqlConnection;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.geometry.Insets;
 
 public class JobSwapController {
     MatchService matchService = new MatchService();
@@ -59,9 +65,54 @@ public class JobSwapController {
         }
     }
 
-    @FXML
-    public void registerButton(){
 
+    @FXML
+    public void registerButton() {
+        // Opret et nyt vindue
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Registrer ny bruger");
+
+        // Opret inputfelter
+        TextField emailInput = new TextField();
+        emailInput.setPromptText("Email");
+
+        PasswordField passwordInput = new PasswordField();
+        passwordInput.setPromptText("Adgangskode");
+
+        TextField nameInput = new TextField();
+        nameInput.setPromptText("Name");
+
+        TextField companyInput = new TextField();
+        companyInput.setPromptText("Company");
+
+        ComboBox<String> jobTitleCB = new ComboBox<>();
+        jobTitleCB.getItems().addAll("Developer", "Designer", "Manager");
+
+        ComboBox<String> areaCodeCB = new ComboBox<>();
+        areaCodeCB.getItems().addAll("1000", "2000", "3000");
+        areaCodeCB.setValue("1000");
+
+        TextField addressInput = new TextField();
+        addressInput.setPromptText("Address");
+
+        Button registerBtn = new Button("Registrer");
+        Label statusLabel = new Label();
+
+        // Layout
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+        layout.getChildren().addAll(new Label("Email:"), emailInput,
+                new Label("Adgangskode:"), passwordInput, new Label("Name:"), nameInput,
+                new Label("Address:"), addressInput, new Label("Post kode:"), areaCodeCB,
+                new Label("Company:"), companyInput, new Label("Job title:"), jobTitleCB,
+                registerBtn, statusLabel);
+
+        // Vis vinduet
+        popupStage.setScene(new Scene(layout, 400, 500));
+        popupStage.initModality(Modality.APPLICATION_MODAL); // Blokerer hovedvinduet
+        popupStage.showAndWait();
     }
+
+
 
 }
