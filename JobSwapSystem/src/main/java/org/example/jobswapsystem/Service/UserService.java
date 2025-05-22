@@ -7,7 +7,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 //Mikkel
-public class UserService {
+public class UserService implements IUserService
+{
 
     public UserService() {
 
@@ -47,6 +48,33 @@ public class UserService {
         }
 
         return null; // Login failed
+    }
+
+    //Allan
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public User register(User user)
+    {
+        try
+        {
+            Connection conn = SqlConnection.getInstance();
+            String sql = "{ call SP_Register(?, ?, ?, ?, ?, ?, ?, ?) }";
+
+            CallableStatement stmt = conn.prepareCall(sql);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, user.getPa());
+        }
+        catch (Exception e)
+        {
+            System.err.println("Database error during register: " + e.getMessage());
+        }
+        return user;
     }
 
     public void getJobTitleByUserId(int userId) {
