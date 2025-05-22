@@ -59,7 +59,7 @@ public class UserService implements IUserService
      * @return
      */
     @Override
-    public User register(User user)
+    public void register(User user)
     {
         try
         {
@@ -69,13 +69,17 @@ public class UserService implements IUserService
             CallableStatement stmt = conn.prepareCall(sql);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setInt(3, user.getPa());
+            stmt.setString(3, user.getPassword());
+            stmt.setInt(4, user.getCompany_ID());
+            stmt.setInt(5, user.getPosition_ID());
+            stmt.setString(6, user.getAddress().getPotalCode());
+            stmt.setString(7, user.getAddress().getAddress());
+            stmt.setString(8, user.getAddress().getCity());
         }
         catch (Exception e)
         {
             System.err.println("Database error during register: " + e.getMessage());
         }
-        return user;
     }
 
     public void getJobTitleByUserId(int userId) {

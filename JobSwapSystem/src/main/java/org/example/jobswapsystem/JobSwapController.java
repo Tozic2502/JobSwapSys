@@ -59,9 +59,9 @@ public class JobSwapController {
             menu.setCurrentUser(loggedInUser);
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
-            userService.getJobTitleByUserId(loggedInUser.getUserID());
-            menu.setJobTitle(currentUser.getJobTitle());
-            System.out.println(currentUser.getJobTitle());
+            userService.getJobTitleByUserId(loggedInUser.getUser_ID());
+            menu.setJobTitle(currentUser.getPosition().getJob_Title());
+            System.out.println(currentUser.getPosition().getJob_Title());
 
 
 
