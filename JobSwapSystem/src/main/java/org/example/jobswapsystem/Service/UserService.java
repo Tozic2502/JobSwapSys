@@ -89,6 +89,44 @@ public class UserService implements IUserService
         }
     }
 
+    /**
+     * Takes user object witch within has the address to update user info with the new data
+     * @param user
+     * @return
+     */
+    @Override
+    public User UpdateUser(User user)
+    {
+        try
+        {
+            Connection conn = SqlConnection.getInstance();
+            String sql = "{ call SP_UpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
+            CallableStatement stmt = conn.prepareCall(sql);
+            stmt.setInt(1, user.getUser_ID());
+            stmt.setString(2, user.getName());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getPassword());
+            stmt.setInt(5, user.getAddress_ID());
+            stmt.setInt(6, user.getCompany_ID());
+            stmt.setInt(7, user.getRole_ID());
+            stmt.setInt(8, user.getPosition_ID());
+            stmt.setString(9, user.getAddress().getPotalCode());
+            stmt.setString(10, user.getAddress().getAddress());
+            stmt.setString(11, user.getAddress().getCity());
+
+            stmt.execute();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Database error during update: " + e.getMessage());
+        }
+        catch (Exception e)
+        {
+            System.err.println("We encountered an error: " + e.getMessage());
+        }
+        return user;
+    }
+
     public void getJobTitleByUserId(int userId) {
         String jobTitle = "Unknown";
 
