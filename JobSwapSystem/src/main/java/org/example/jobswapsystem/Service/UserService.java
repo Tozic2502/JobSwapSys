@@ -1,4 +1,5 @@
 package org.example.jobswapsystem.Service;
+import org.example.jobswapsystem.Models.Address;
 import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.util.SqlConnection;
@@ -54,12 +55,12 @@ public class UserService implements IUserService
     //Allan
 
     /**
-     *
+     * takes user object and address object to create a new user entry in database and address
      * @param user
-     * @return
+     * @param address
      */
     @Override
-    public void register(User user)
+    public void register(User user, Address address)
     {
         try
         {
@@ -72,13 +73,19 @@ public class UserService implements IUserService
             stmt.setString(3, user.getPassword());
             stmt.setInt(4, user.getCompany_ID());
             stmt.setInt(5, user.getPosition_ID());
-            stmt.setString(6, user.getAddress().getPotalCode());
-            stmt.setString(7, user.getAddress().getAddress());
-            stmt.setString(8, user.getAddress().getCity());
+            stmt.setString(6, address.getPotalCode());
+            stmt.setString(7, address.getAddress());
+            stmt.setString(8, address.getCity());
+
+            stmt.execute();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Database error during register: " + e.getMessage());
         }
         catch (Exception e)
         {
-            System.err.println("Database error during register: " + e.getMessage());
+            System.err.println("We encountered an error: " + e.getMessage());
         }
     }
 
