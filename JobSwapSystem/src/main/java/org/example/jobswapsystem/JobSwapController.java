@@ -47,13 +47,15 @@ public class JobSwapController {
         User loggedInUser = userService.login(emailTextField.getText(), passwordTextField.getText());
         if (loggedInUser != null) {
             this.currentUser = loggedInUser;
-            menu.setCurrentUser(loggedInUser);
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
             userService.getJobTitleByUserId(loggedInUser.getUserID());
             menu.setJobTitle(currentUser.getJobTitle());
             System.out.println(currentUser.getJobTitle());
 
+
+
+            menu.setCurrentUser(loggedInUser);
             menu.createHomeScreen();
 
 
