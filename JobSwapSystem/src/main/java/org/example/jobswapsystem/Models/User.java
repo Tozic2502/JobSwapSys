@@ -4,7 +4,7 @@ import java.util.List;
 
 public class User
 {
-    private int id;
+    private int user_ID;
     private String name;
     private String email;
     private String password;
@@ -19,14 +19,14 @@ public class User
     private Position position;
     private List<Swap_Req> swap_req;
 
-    public int getId()
+    public int getUser_ID()
     {
-        return id;
+        return user_ID;
     }
 
-    public void setId(int id)
+    public void setId(int user_ID)
     {
-        this.id = id;
+        this.user_ID = user_ID;
     }
 
     public String getName()
