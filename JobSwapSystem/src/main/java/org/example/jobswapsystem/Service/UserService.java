@@ -53,7 +53,6 @@ public class UserService implements IUserService
     }
 
     //Allan
-
     /**
      * takes user object and address object to create a new user entry in database and address
      * @param user
@@ -89,6 +88,7 @@ public class UserService implements IUserService
         }
     }
 
+    //Allan
     /**
      * Takes user object witch within has the address to update user info with the new data
      * @param user
