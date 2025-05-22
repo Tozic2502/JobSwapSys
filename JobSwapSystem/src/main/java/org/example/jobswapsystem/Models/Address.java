@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Address
 {
-    private int Address_ID;
+    private int address_ID;
     private String potalCode;
     private String address;
     private String city;
@@ -14,12 +14,12 @@ public class Address
 
     public int getAddress_ID()
     {
-        return Address_ID;
+        return address_ID;
     }
 
     public void setAddress_ID(int address_ID)
     {
-        Address_ID = address_ID;
+        this.address_ID = address_ID;
     }
 
     public String getPotalCode()
