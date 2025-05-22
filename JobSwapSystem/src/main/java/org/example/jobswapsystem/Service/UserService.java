@@ -1,4 +1,5 @@
 package org.example.jobswapsystem.Service;
+import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.util.SqlConnection;
 
@@ -30,13 +31,13 @@ public class UserService implements IUserService
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         User user = new User();
-                        user.setUserID(rs.getInt("User_ID"));
+                        user.setUser_ID(rs.getInt("User_ID"));
                         user.setName(rs.getString("Name"));
                         user.setEmail(rs.getString("Email"));
-                        user.setCompanyID(rs.getInt("Company_ID"));
-                        user.setRoleID(rs.getInt("Role_ID"));
-                        user.setAddressID(rs.getInt("Address_ID"));
-                        user.setPositionID(rs.getInt("Position_ID"));
+                        user.setCompany_ID(rs.getInt("Company_ID"));
+                        user.setRole_ID(rs.getInt("Role_ID"));
+                        user.setAddress_ID(rs.getInt("Address_ID"));
+                        user.setPosition_ID(rs.getInt("Position_ID"));
 
 
                         return user;
@@ -87,8 +88,10 @@ public class UserService implements IUserService
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         User user = new User();
-                        user.setJobTitle(rs.getString("Job_Title"));
-                        jobTitle = user.getJobTitle();
+                        Position position = new Position();
+                        position.setJob_Title(rs.getString("Job_Title"));
+                        user.setPosition(position);
+                        jobTitle = user.getPosition().getJob_Title();
                         System.out.println(jobTitle);
 
                     }

@@ -1,104 +1,151 @@
 package org.example.jobswapsystem.Models;
-//Mikkel
-public class User {
-    private int userID;
-    private String email;
+
+import java.util.List;
+
+public class User
+{
+    private int user_ID;
     private String name;
-    private String jobTitle;
-    private String companyName;
-    private String location;
-    private int companyID;
-    private int roleID;
-    private int addressID;
-    private int positionID;
+    private String email;
+    private String password;
+    private int address_ID;
+    private int company_ID;
+    private int role_ID;
+    private int position_ID;
 
-    public void sendInvitation(User other) {
+    private Address address;
+    private Role role;
+    private Company company;
+    private Position position;
+    private List<Swap_Req> swap_req;
 
+    public int getUser_ID()
+    {
+        return user_ID;
     }
 
-    public void confirmSwap() {
-
+    public void setUser_ID(int user_ID)
+    {
+        this.user_ID = user_ID;
     }
 
-    // Getters and Setters
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getJobTitle() {
-        return jobTitle;
+    public String getEmail()
+    {
+        return email;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getPassword()
+    {
+        return password;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
-    public String getLocation() {
-        return location;
+    public int getAddress_ID()
+    {
+        return address_ID;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-    public int getCompanyID() {
-        return companyID;
+    public void setAddress_ID(int address_ID)
+    {
+        this.address_ID = address_ID;
     }
 
-    public void setCompanyID(int companyID) {
-        this.companyID = companyID;
+    public int getCompany_ID()
+    {
+        return company_ID;
     }
 
-    public int getRoleID() {
-        return roleID;
+    public void setCompany_ID(int company_ID)
+    {
+        this.company_ID = company_ID;
     }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
+    public int getRole_ID()
+    {
+        return role_ID;
     }
 
-    public int getAddressID() {
-        return addressID;
+    public void setRole_ID(int role_ID)
+    {
+        this.role_ID = role_ID;
     }
 
-    public void setAddressID(int addressID) {
-        this.addressID = addressID;
+    public int getPosition_ID()
+    {
+        return position_ID;
     }
 
-    public int getPositionID() {
-        return positionID;
+    public void setPosition_ID(int position_ID)
+    {
+        this.position_ID = position_ID;
     }
 
-    public void setPositionID(int positionID) {
-        this.positionID = positionID;
+    public Address getAddress()
+    {
+        return address;
     }
 
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
+
+    public Role getRole()
+    {
+        return role;
+    }
+
+    public void setRole(Role role)
+    {
+        this.role = role;
+    }
+
+    public Company getCompany()
+    {
+        return company;
+    }
+
+    public void setCompany(Company company)
+    {
+        this.company = company;
+    }
+
+    public Position getPosition()
+    {
+        return position;
+    }
+
+    public void setPosition(Position position)
+    {
+        this.position = position;
+    }
+
+    public List<Swap_Req> getSwap_req()
+    {
+        return swap_req;
+    }
+
+    public void setSwap_req(List<Swap_Req> swap_req)
+    {
+        this.swap_req = swap_req;
+    }
 }

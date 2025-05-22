@@ -6,7 +6,7 @@ import java.util.List;
 public class Position
 {
     private int position_ID;
-    private String name;
+    private String job_Title;
 
     private List<Position_Industry> position_IndustryList = new ArrayList<Position_Industry>();
     private User user;
@@ -21,14 +21,14 @@ public class Position
         this.position_ID = position_ID;
     }
 
-    public String getName()
+    public String getJob_Title()
     {
-        return name;
+        return job_Title;
     }
 
-    public void setName(String name)
+    public void setJob_Title(String job_Title)
     {
-        this.name = name;
+        this.job_Title = job_Title;
     }
 
     public List<Position_Industry> getPosition_IndustryList()

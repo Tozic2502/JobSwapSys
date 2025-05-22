@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Industry
 {
-    private int Industry_ID;
+    private int industry_ID;
     private String name;
 
     private List<Position_Industry> position_industries = new ArrayList<Position_Industry>();
 
     public int getIndustry_ID()
     {
-        return Industry_ID;
+        return industry_ID;
     }
 
     public void setIndustry_ID(int industry_ID)
     {
-        Industry_ID = industry_ID;
+        this.industry_ID = industry_ID;
     }
 
     public String getName()
