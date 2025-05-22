@@ -11,7 +11,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("Application-View.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
-        stage.setTitle("JobSwap System");
+        stage.setTitle("Job-Bytte!");
         stage.setScene(scene);
         stage.show();
     }
