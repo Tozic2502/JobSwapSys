@@ -1,5 +1,6 @@
 package org.example.jobswapsystem.Service;
 import org.example.jobswapsystem.Models.Address;
+import org.example.jobswapsystem.Models.Company;
 import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.util.SqlConnection;
@@ -127,29 +128,43 @@ public class UserService implements IUserService
         return user;
     }
 
-    public void getJobTitleByUserId(int userId) {
-        String jobTitle = "Unknown";
-
+    public User getUserDetails(User loggedInUser) {
         try (Connection conn = SqlConnection.getInstance()) {
-            String sql = "{ call SP_GetJobTitleByUser(?) }";
+            String sql = "{ call GetUserDetails(?) }";
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, userId);
+                stmt.setInt(1, loggedInUser.getUser_ID());
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        User user = new User();
-                        Position position = new Position();
-                        position.setJob_Title(rs.getString("Job_Title"));
-                        user.setPosition(position);
-                        jobTitle = user.getPosition().getJob_Title();
-                        System.out.println(jobTitle);
+                        // Set nested models
+                        if (loggedInUser.getPosition() == null)
+                        {
+                            loggedInUser.setPosition(new Position());
+                        }
 
+                        loggedInUser.getPosition().setJob_Title(rs.getString("Job_Title"));
+
+                        if (loggedInUser.getCompany() == null)
+                        {
+                            loggedInUser.setCompany(new Company());
+                        }
+                        loggedInUser.getCompany().setName(rs.getString("Company"));
+
+                        if (loggedInUser.getAddress() == null)
+                        {
+                            loggedInUser.setAddress(new Address());
+                        }
+                        loggedInUser.getAddress().setCity(rs.getString("City"));
+
+                        return loggedInUser;
                     }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get job title: " + e.getMessage());
+            System.err.println("Error retrieving user details: " + e.getMessage());
         }
 
+        return loggedInUser;
     }
-
 }
+
+
