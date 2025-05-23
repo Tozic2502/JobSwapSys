@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.Service.MatchService;
 import org.example.jobswapsystem.Service.UserService;
-import org.example.jobswapsystem.util.SqlConnection;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -15,7 +14,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+
 public class JobSwapController {
+
     MatchService matchService = new MatchService();
     User currentUser = new User();
     MenuCreater menu = new MenuCreater();
@@ -23,12 +24,11 @@ public class JobSwapController {
     BorderPane root = menu.root;
 
     @FXML TextField emailTextField, passwordTextField;
-
-
-
     @FXML GridPane startScreen;
 
-
+    /**
+     * Called after FXML is loaded. Sets up button/menu handlers.
+     */
     @FXML
     public void initialize() {
         handleHomeReturn();
@@ -36,21 +36,40 @@ public class JobSwapController {
         handleConfirmSwap();
         handleSendInvitation();
     }
+
+    /**
+     * Defines behavior when the Search label is clicked.
+     * Clears the screen and displays the search view.
+     */
     public void handleSearch(){
         menu.searchLbl.setOnMouseClicked(e -> root.getChildren().clear());
         menu.searchLbl.setOnMouseClicked(e -> menu.topMenu());
         menu.searchLbl.setOnMouseClicked(e -> menu.searchScreen());
     }
-    public void handleConfirmSwap(){
 
-    }
-    public void handleSendInvitation(){
+    /**
+     * Placeholder for Confirm Swap label click behavior.
+     */
+    public void handleConfirmSwap(){ }
 
-    }
+    /**
+     * Placeholder for Send Invitation label click behavior.
+     */
+    public void handleSendInvitation(){ }
+
+    /**
+     * Defines behavior when the Home label is clicked.
+     * Clears the screen and returns to the home view.
+     */
     public void handleHomeReturn(){
         menu.homeLbl.setOnMouseClicked(e -> root.getChildren().clear());
         menu.homeLbl.setOnMouseClicked(e -> menu.createHomeScreen());
     }
+
+    /**
+     * Called when the login button is pressed.
+     * Authenticates the user, loads their home screen, and sets up UI with user info.
+     */
     @FXML
     public void onActionloginButton() {
         User loggedInUser = userService.login(emailTextField.getText(), passwordTextField.getText());
@@ -59,26 +78,26 @@ public class JobSwapController {
 
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
-            userService.getJobTitleByUserId(loggedInUser.getUser_ID());
-            //menu.setJobTitle(currentUser.getPosition().getJob_Title());
 
+            userService.getJobTitleByUserId(loggedInUser.getUser_ID()); // Job title loading logic
+
+            // Inject the logged-in user into the menu and build the home screen
             menu.setCurrentUser(loggedInUser);
             menu.createHomeScreen();
-
-
         } else {
             System.out.println("Wrong credentials");
         }
     }
 
-
+    /**
+     * Opens a modal dialog for user registration.
+     * Collects user info including email, password, job title, etc.
+     */
     @FXML
     public void registerButton() {
-        // Opret et nyt vindue
         Stage popupStage = new Stage();
         popupStage.setTitle("Registrer ny bruger");
 
-        // Opret inputfelter
         TextField emailInput = new TextField();
         emailInput.setPromptText("Email");
 
@@ -104,7 +123,6 @@ public class JobSwapController {
         Button registerBtn = new Button("Registrer");
         Label statusLabel = new Label();
 
-        // Layout
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
         layout.getChildren().addAll(new Label("Email:"), emailInput,
@@ -113,12 +131,8 @@ public class JobSwapController {
                 new Label("Company:"), companyInput, new Label("Job title:"), jobTitleCB,
                 registerBtn, statusLabel);
 
-        // Vis vinduet
         popupStage.setScene(new Scene(layout, 400, 500));
-        popupStage.initModality(Modality.APPLICATION_MODAL); // Blokerer hovedvinduet
+        popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.showAndWait();
     }
-
-
-
 }
