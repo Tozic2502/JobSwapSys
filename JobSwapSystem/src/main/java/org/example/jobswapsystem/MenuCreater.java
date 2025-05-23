@@ -148,11 +148,13 @@ public class MenuCreater {
         form.setPrefWidth(300);
         form.setStyle("-fx-border-color: #aaa; -fx-border-width: 1;");
 
+        // Right side: the results panel
         Label resultsLabel = new Label("Results from search");
         VBox resultsBox = new VBox(10, resultsLabel, resultsList);
         resultsBox.setPadding(new Insets(20));
         resultsBox.setStyle("-fx-border-color: #aaa; -fx-border-width: 1;");
 
+        // Combine into one HBox and place in CENTER
         HBox searchContainer = new HBox(30, form, resultsBox);
         searchContainer.setPadding(new Insets(20));
         root.setCenter(searchContainer);
@@ -165,9 +167,9 @@ public class MenuCreater {
     public void setCurrentUser(User user) {
         nameLabel.setText(user.getName());
         emailLabel.setText(user.getEmail());
-        //jobLabel.setText(user.getPosition().getJob_Title());
-        //companyLabel.setText(user.getCompany().getName());
-        //locationLabel.setText(user.getAddress().getPostalCode() + ", " + user.getAddress().getAddress() + ", " + user.getAddress().getCity());
+        jobLabel.setText(user.getPosition().getJob_Title());
+        companyLabel.setText(user.getCompany().getName());
+        locationLabel.setText(user.getAddress().getCity());
     }
 
     /**

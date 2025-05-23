@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.Service.MatchService;
 import org.example.jobswapsystem.Service.UserService;
+import org.example.jobswapsystem.util.SqlConnection;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -24,6 +25,9 @@ public class JobSwapController {
     BorderPane root = menu.root;
 
     @FXML TextField emailTextField, passwordTextField;
+
+
+
     @FXML GridPane startScreen;
 
     /**
@@ -78,10 +82,7 @@ public class JobSwapController {
 
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
-
-            userService.getJobTitleByUserId(loggedInUser.getUser_ID()); // Job title loading logic
-
-            // Inject the logged-in user into the menu and build the home screen
+            loggedInUser = userService.getUserDetails(loggedInUser);
             menu.setCurrentUser(loggedInUser);
             menu.createHomeScreen();
         } else {

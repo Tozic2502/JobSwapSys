@@ -8,5 +8,5 @@ public interface IUserService
     User login(String email, String password);
     void register(User user, Address address);
     User UpdateUser(User user);
-    void getJobTitleByUserId(int userId);
+    User getUserDetails(User loggedInUser);
 }
