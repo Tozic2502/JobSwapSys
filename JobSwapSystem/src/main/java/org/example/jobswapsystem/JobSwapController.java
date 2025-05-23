@@ -4,12 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import org.example.jobswapsystem.Models.Address;
-import org.example.jobswapsystem.Models.Company;
-import org.example.jobswapsystem.Models.Position;
-import org.example.jobswapsystem.Models.User;
+import org.example.jobswapsystem.Models.*;
 import org.example.jobswapsystem.Service.*;
-import org.example.jobswapsystem.util.SqlConnection;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -17,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JobSwapController {
@@ -26,9 +21,8 @@ public class JobSwapController {
     ICompanyService companyService = new CompanyService();
     User currentUser = new User();
     MenuCreater menu = new MenuCreater();
-    UserService userService = new UserService();
+    IUserService userService = new UserService();
     BorderPane root = menu.root;
-    IUserService userServiceinterface = new UserService();
 
     @FXML TextField emailTextField, passwordTextField;
 
@@ -156,7 +150,7 @@ public class JobSwapController {
                 address.setCity(cityInput.getText());
                 address.setAddress(addressInput.getText());
 
-                userServiceinterface.register(user, address);
+                userService.register(user, address);
             }
         });
 
