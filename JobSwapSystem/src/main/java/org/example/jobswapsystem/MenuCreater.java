@@ -1,6 +1,5 @@
 package org.example.jobswapsystem;
 
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -14,6 +13,7 @@ import org.example.jobswapsystem.Models.User;
  * Builds the UI layout for the Job Swap system, including the home screen,
  * navigation menu, user info panel, and search interface.
  */
+//Mikkel
 public class MenuCreater {
 
     private ChoiceBox<String> jobTitleCB = new ChoiceBox<>();
