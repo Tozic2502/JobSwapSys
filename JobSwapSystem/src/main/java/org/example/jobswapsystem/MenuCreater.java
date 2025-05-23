@@ -160,7 +160,6 @@ public class MenuCreater {
 
     /**
      * Populates the right panel with the logged-in user's information.
-     *
      * @param user The current logged-in user
      */
     public void setCurrentUser(User user) {
