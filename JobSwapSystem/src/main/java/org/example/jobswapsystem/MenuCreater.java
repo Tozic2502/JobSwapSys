@@ -158,9 +158,9 @@ public class MenuCreater {
     public void setCurrentUser(User user) {
         nameLabel.setText(user.getName());
         emailLabel.setText(user.getEmail());
-        jobLabel.setText(user.getJobTitle());
-        companyLabel.setText(user.getCompanyName());
-        locationLabel.setText(user.getLocation());
+        //jobLabel.setText(user.getPosition().getJob_Title());
+        //companyLabel.setText(user.getCompany().getName());
+        //locationLabel.setText(user.getAddress().getPotalCode() + ", " + user.getAddress().getAddress() + ", " + user.getAddress().getCity() );
     }
     public void setJobTitle(String jobTitle) {
         if (jobTitleCB != null && !jobTitleCB.getItems().contains(jobTitle)) {
