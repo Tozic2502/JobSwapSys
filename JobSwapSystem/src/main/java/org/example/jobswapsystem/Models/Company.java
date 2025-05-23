@@ -38,4 +38,10 @@ public class Company
     {
         this.address_comps = address_comps;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 }

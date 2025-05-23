@@ -5,10 +5,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.example.jobswapsystem.Models.Address;
+import org.example.jobswapsystem.Models.Company;
+import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
-import org.example.jobswapsystem.Service.IUserService;
-import org.example.jobswapsystem.Service.MatchService;
-import org.example.jobswapsystem.Service.UserService;
+import org.example.jobswapsystem.Service.*;
 import org.example.jobswapsystem.util.SqlConnection;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,8 +17,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JobSwapController {
     MatchService matchService = new MatchService();
+    IPositionService positionService = new PositionSerice();
+    ICompanyService companyService = new CompanyService();
     User currentUser = new User();
     MenuCreater menu = new MenuCreater();
     UserService userService = new UserService();
@@ -91,11 +96,17 @@ public class JobSwapController {
         TextField nameInput = new TextField();
         nameInput.setPromptText("Name");
 
-        TextField companyInput = new TextField();
-        companyInput.setPromptText("Company");
+        List<Company> companies = companyService.getCompanies();
+        ChoiceBox<Company> companyChoiceBox = new ChoiceBox<>();
+        companyChoiceBox.getItems().addAll(companies);
+        companyChoiceBox.getSelectionModel().selectFirst();
 
-        ComboBox<String> jobTitleCB = new ComboBox<>();
-        jobTitleCB.getItems().addAll("Developer", "Designer", "Manager");
+
+        List<Position> positions = positionService.getPositions();
+        ChoiceBox<Position> job_TitleCB = new ChoiceBox<>();
+        job_TitleCB.getItems().addAll(positions);
+        job_TitleCB.getSelectionModel().selectFirst();
+
 
         TextField areaCodeInput = new TextField();
         areaCodeInput.setPromptText("Area Code");
@@ -108,7 +119,7 @@ public class JobSwapController {
 
         Button registerBtn = new Button("Registrer");
         registerBtn.setOnAction(e -> {
-            if (emailInput.getText().isEmpty() || passwordInput.getText().isEmpty() || nameInput.getText().isEmpty() || companyInput.getText().isEmpty())
+            if (emailInput.getText().isEmpty() || passwordInput.getText().isEmpty() || nameInput.getText().isEmpty())
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
             }
@@ -118,8 +129,8 @@ public class JobSwapController {
                 user.setEmail(emailInput.getText());
                 user.setPassword(passwordInput.getText());
                 user.setName(nameInput.getText());
-                user.setCompany_ID(1);
-                user.setPosition_ID(1);
+                user.setCompany_ID(job_TitleCB.getSelectionModel().getSelectedItem().getPosition_ID());
+                user.setPosition_ID(companyChoiceBox.getSelectionModel().getSelectedItem().getCompany_ID());
 
                 Address address = new Address();
                 address.setPotalCode(areaCodeInput.getText());
@@ -138,7 +149,7 @@ public class JobSwapController {
         layout.getChildren().addAll(new Label("Email:"), emailInput,
                 new Label("Adgangskode:"), passwordInput, new Label("Name:"), nameInput,
                 new Label("Address:"), addressInput, new Label("Post kode:"), areaCodeInput,
-                new Label("Company:"), companyInput, new Label("Job title:"), jobTitleCB,
+                new Label("Company:"), companyChoiceBox, new Label("Job title:"), job_TitleCB,
                 registerBtn, statusLabel);
 
         // Vis vinduet

@@ -50,4 +50,10 @@ public class Position
     {
         this.user = user;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.job_Title;
+    }
 }
