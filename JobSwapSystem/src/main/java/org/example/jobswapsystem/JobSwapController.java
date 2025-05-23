@@ -83,6 +83,7 @@ public class JobSwapController {
             startScreen.getChildren().clear();
             startScreen.getChildren().add(root);
             loggedInUser = userService.getUserDetails(loggedInUser);
+            menu.setJobTitle(loggedInUser);
             menu.setCurrentUser(loggedInUser);
             menu.createHomeScreen();
         } else {

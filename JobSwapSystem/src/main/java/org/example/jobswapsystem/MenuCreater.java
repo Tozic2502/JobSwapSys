@@ -16,7 +16,7 @@ import org.example.jobswapsystem.Models.User;
  */
 public class MenuCreater {
 
-    private ChoiceBox<String> jobTitleCB;
+    private ChoiceBox<String> jobTitleCB = new ChoiceBox<>();
     private ChoiceBox<String> distanceCB;
     private ChoiceBox<String> areaCodeCB;
     private ListView<String> resultsList;
@@ -131,7 +131,6 @@ public class MenuCreater {
      * Builds the search UI with filters like job title, distance, and area code.
      */
     public void searchScreen(){
-        jobTitleCB = new ChoiceBox<>();
 
         ChoiceBox<String> distanceCB = new ChoiceBox<>();
         distanceCB.getItems().addAll("5 km", "10 km", "20 km");
@@ -175,13 +174,15 @@ public class MenuCreater {
     /**
      * Sets the job title in the job title choice box.
      *
-     * @param jobTitle The job title to show
+     * @param user The current logged-in user
      */
-    public void setJobTitle(String jobTitle) {
-        if (jobTitleCB != null && !jobTitleCB.getItems().contains(jobTitle)) {
+    public void setJobTitle(User user) {
+        if (user != null && user.getPosition() != null) {
+            String jobTitle = user.getPosition().getJob_Title();
             jobTitleCB.getItems().clear();
-            jobTitleCB.getItems().add(jobTitle);
+            jobTitleCB.getItems().addAll(jobTitle);
             jobTitleCB.setValue(jobTitle);
         }
+
     }
 }
