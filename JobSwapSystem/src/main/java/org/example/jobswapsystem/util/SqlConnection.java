@@ -36,7 +36,6 @@ public class SqlConnection
 
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);
             System.out.println("Database connection established.");
-
         }
         catch (SQLException e)
         {
