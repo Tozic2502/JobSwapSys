@@ -17,4 +17,5 @@ public class SessionManager {
     public static void clearSession() {
         currentUser = null;
     }
+
 }
