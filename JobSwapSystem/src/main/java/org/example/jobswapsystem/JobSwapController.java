@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.example.jobswapsystem.Models.*;
+import org.example.jobswapsystem.Repository.UserRepository;
 import org.example.jobswapsystem.Service.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,16 +13,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
+import org.example.jobswapsystem.Session.SessionManager;
 
 import java.util.List;
 
 public class JobSwapController {
     MatchService matchService = new MatchService();
-    IPositionService positionService = new PositionSerice();
+    IPositionService positionService = new PositionService();
     ICompanyService companyService = new CompanyService();
     User currentUser = new User();
     MenuCreater menu = new MenuCreater();
-    IUserService userService = new UserService();
+    UserService userService = new UserService(new UserRepository());
+    SessionManager sessionManager = new SessionManager();
+    LoginService loginService = new LoginService(userService, sessionManager);
     BorderPane root = menu.root;
 
     @FXML TextField emailTextField, passwordTextField;
@@ -76,15 +80,16 @@ public class JobSwapController {
      */
     @FXML
     public void onActionloginButton() {
-        User loggedInUser = userService.login(emailTextField.getText(), passwordTextField.getText());
-        if (loggedInUser != null) {
-            this.currentUser = loggedInUser;
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
 
+        boolean success = loginService.login(email, password);
+
+        if (success) {
+            User currentUser = sessionManager.getCurrentUser();
+            menu.setCurrentUser(currentUser);
             startScreen.getChildren().clear();
-            startScreen.getChildren().add(root);
-            loggedInUser = userService.getUserDetails(loggedInUser);
-            menu.setJobTitle(loggedInUser);
-            menu.setCurrentUser(loggedInUser);
+            startScreen.getChildren().add(menu.root);
             menu.createHomeScreen();
         } else {
             System.out.println("Wrong credentials");

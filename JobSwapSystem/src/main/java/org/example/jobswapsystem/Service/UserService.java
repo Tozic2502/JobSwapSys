@@ -3,6 +3,8 @@ import org.example.jobswapsystem.Models.Address;
 import org.example.jobswapsystem.Models.Company;
 import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
+import org.example.jobswapsystem.Repository.IUserRepository;
+import org.example.jobswapsystem.Repository.UserRepository;
 import org.example.jobswapsystem.util.SqlConnection;
 
 import java.sql.CallableStatement;
@@ -13,44 +15,18 @@ import java.sql.SQLException;
 public class UserService implements IUserService
 {
 
-    public UserService() {
+    private final IUserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public User login(String email, String password)
-    {
-        try (Connection conn = SqlConnection.getInstance()) {
-            if (conn == null) {
-                System.err.println("Failed to establish database connection");
-                return null;
-            }
+    public User login(String email, String password) {
+        return userRepository.getUserByEmailAndPassword(email, password);
+    }
 
-            String sql = "{ call SP_Login(?, ?) }";
-            try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setString(1, email);
-                stmt.setString(2, password);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        User user = new User();
-                        user.setUser_ID(rs.getInt("User_ID"));
-                        user.setName(rs.getString("Name"));
-                        user.setEmail(rs.getString("Email"));
-                        user.setCompany_ID(rs.getInt("Company_ID"));
-                        user.setRole_ID(rs.getInt("Role_ID"));
-                        user.setAddress_ID(rs.getInt("Address_ID"));
-                        user.setPosition_ID(rs.getInt("Position_ID"));
-
-
-                        return user;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Database error during login: " + e.getMessage());
-        }
-
-        return null; // Login failed
+    public String getJobTitleByUserId(int userId) {
+        return userRepository.getJobTitleByUserId(userId);
     }
 
     //Allan
@@ -165,6 +141,10 @@ public class UserService implements IUserService
 
         return loggedInUser;
     }
+
+
+
+
 }
 
 
