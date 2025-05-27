@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
-import org.example.jobswapsystem.Session.SessionManager;
+import org.example.jobswapsystem.util.SessionManager;
 
 import java.util.List;
 

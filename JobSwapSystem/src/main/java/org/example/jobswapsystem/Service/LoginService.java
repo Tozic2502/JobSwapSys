@@ -2,7 +2,7 @@ package org.example.jobswapsystem.Service;
 
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.Repository.UserRepository;
-import org.example.jobswapsystem.Session.SessionManager;
+import org.example.jobswapsystem.util.SessionManager;
 
 public class LoginService implements ILoginService {
     private final UserService userService;
