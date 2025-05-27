@@ -14,4 +14,6 @@ module org.example.jobswapsystem {
 
     opens org.example.jobswapsystem to javafx.fxml;
     exports org.example.jobswapsystem;
+    exports org.example.jobswapsystem.Service;
+    exports org.example.jobswapsystem.Models;
 }
