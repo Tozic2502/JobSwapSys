@@ -87,9 +87,11 @@ public class JobSwapController {
 
         if (success) {
             User currentUser = sessionManager.getCurrentUser();
+            userService.getUserdDetails(currentUser);
             menu.setCurrentUser(currentUser);
             startScreen.getChildren().clear();
             startScreen.getChildren().add(menu.root);
+            menu.setJobTitle(currentUser);
             menu.createHomeScreen();
         } else {
             System.out.println("Wrong credentials");

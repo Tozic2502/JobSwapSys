@@ -1,5 +1,8 @@
 package org.example.jobswapsystem.Repository;
 
+import org.example.jobswapsystem.Models.Address;
+import org.example.jobswapsystem.Models.Company;
+import org.example.jobswapsystem.Models.Position;
 import org.example.jobswapsystem.Models.User;
 import org.example.jobswapsystem.util.SqlConnection;
 
@@ -37,20 +40,42 @@ public class UserRepository implements IUserRepository {
         return user;
     }
 
-    @Override
-    public String getJobTitleByUserId(int userId) {
+   @Override
+    public User getUserDetails(User loggedInUser) {
         try (Connection conn = SqlConnection.getInstance()) {
-            String sql = "{ call SP_GetJobTitleByUserID(?) }";
-            CallableStatement stmt = conn.prepareCall(sql);
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
+            String sql = "{ call GetUserDetails(?) }";
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
+                stmt.setInt(1, loggedInUser.getUser_ID());
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        // Set nested models
+                        if (loggedInUser.getPosition() == null)
+                        {
+                            loggedInUser.setPosition(new Position());
+                        }
 
-            if (rs.next()) {
-                return rs.getString("Job_Title");
+                        loggedInUser.getPosition().setJob_Title(rs.getString("Job_Title"));
+
+                        if (loggedInUser.getCompany() == null)
+                        {
+                            loggedInUser.setCompany(new Company());
+                        }
+                        loggedInUser.getCompany().setName(rs.getString("Company"));
+
+                        if (loggedInUser.getAddress() == null)
+                        {
+                            loggedInUser.setAddress(new Address());
+                        }
+                        loggedInUser.getAddress().setCity(rs.getString("City"));
+
+                        return loggedInUser;
+                    }
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error retrieving user details: " + e.getMessage());
         }
-        return "Unknown";
+
+        return loggedInUser;
     }
 }

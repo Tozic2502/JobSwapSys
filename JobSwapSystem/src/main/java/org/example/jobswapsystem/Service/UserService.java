@@ -12,8 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserService implements IUserService
-{
+public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
 
@@ -25,21 +24,21 @@ public class UserService implements IUserService
         return userRepository.getUserByEmailAndPassword(email, password);
     }
 
-    public String getJobTitleByUserId(int userId) {
-        return userRepository.getJobTitleByUserId(userId);
+    public User getUserdDetails(User loggedInUser) {
+        return userRepository.getUserDetails(loggedInUser);
     }
 
     //Allan
+
     /**
      * takes user object and address object to create a new user entry in database and address
+     *
      * @param user
      * @param address
      */
     @Override
-    public void register(User user, Address address)
-    {
-        try
-        {
+    public void register(User user, Address address) {
+        try {
             Connection conn = SqlConnection.getInstance();
             String sql = "{ call SP_Register(?, ?, ?, ?, ?, ?, ?, ?) }";
 
@@ -54,28 +53,24 @@ public class UserService implements IUserService
             stmt.setString(8, address.getCity());
 
             stmt.execute();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Database error during register: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println("We encountered an error: " + e.getMessage());
         }
     }
 
     //Allan
+
     /**
      * Takes user object witch within has the address to update user info with the new data
+     *
      * @param user
      * @return
      */
     @Override
-    public User UpdateUser(User user)
-    {
-        try
-        {
+    public User UpdateUser(User user) {
+        try {
             Connection conn = SqlConnection.getInstance();
             String sql = "{ call SP_UpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement stmt = conn.prepareCall(sql);
@@ -92,59 +87,13 @@ public class UserService implements IUserService
             stmt.setString(11, user.getAddress().getCity());
 
             stmt.execute();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Database error during update: " + e.getMessage());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println("We encountered an error: " + e.getMessage());
         }
         return user;
     }
-
-    public User getUserDetails(User loggedInUser) {
-        try (Connection conn = SqlConnection.getInstance()) {
-            String sql = "{ call GetUserDetails(?) }";
-            try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, loggedInUser.getUser_ID());
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        // Set nested models
-                        if (loggedInUser.getPosition() == null)
-                        {
-                            loggedInUser.setPosition(new Position());
-                        }
-
-                        loggedInUser.getPosition().setJob_Title(rs.getString("Job_Title"));
-
-                        if (loggedInUser.getCompany() == null)
-                        {
-                            loggedInUser.setCompany(new Company());
-                        }
-                        loggedInUser.getCompany().setName(rs.getString("Company"));
-
-                        if (loggedInUser.getAddress() == null)
-                        {
-                            loggedInUser.setAddress(new Address());
-                        }
-                        loggedInUser.getAddress().setCity(rs.getString("City"));
-
-                        return loggedInUser;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving user details: " + e.getMessage());
-        }
-
-        return loggedInUser;
-    }
-
-
-
-
 }
 
 
