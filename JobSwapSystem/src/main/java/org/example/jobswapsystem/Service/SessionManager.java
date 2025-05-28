@@ -1,4 +1,4 @@
-package org.example.jobswapsystem.util;
+package org.example.jobswapsystem.Service;
 
 import org.example.jobswapsystem.Models.User;
 
