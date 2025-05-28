@@ -2,22 +2,21 @@ package org.example.jobswapsystem.Service;
 
 import org.example.jobswapsystem.Models.User;
 
-public class SessionManager {
+public class SessionManager implements ISessionManager {
     private User currentUser;
 
+    @Override
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
 
+    @Override
     public User getCurrentUser() {
         return currentUser;
     }
 
+    @Override
     public void clearSession() {
         this.currentUser = null;
-    }
-
-    public boolean isLoggedIn() {
-        return currentUser != null;
     }
 }

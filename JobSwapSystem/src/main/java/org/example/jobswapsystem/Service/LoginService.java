@@ -4,9 +4,9 @@ import org.example.jobswapsystem.Models.User;
 
 public class LoginService implements ILoginService {
     private final UserService userService;
-    private final SessionManager sessionManager;
+    private final ISessionManager sessionManager;
 
-    public LoginService(UserService userService, SessionManager sessionManager) {
+    public LoginService(UserService userService, ISessionManager sessionManager) {
         this.userService = userService;
         this.sessionManager = sessionManager;
     }
