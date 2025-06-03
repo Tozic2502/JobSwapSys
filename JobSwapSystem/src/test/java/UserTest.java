@@ -1,4 +1,5 @@
 import org.example.jobswapsystem.Models.User;
+import org.example.jobswapsystem.Repository.UserRepository;
 import org.example.jobswapsystem.Service.IUserService;
 import org.example.jobswapsystem.Service.UserService;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +15,7 @@ public class UserTest
     @BeforeAll
     static void init()
     {
-        userService = new UserService();
+        userService = new UserService(new UserRepository());
     }
 
     /**
@@ -34,4 +35,40 @@ public class UserTest
         assert user != null;
         assert user.getName().equals("Alice Johnson");
     }
+    /*
+    //Mikkel
+    UnitTest example for IN, OUT, ON, OFF
+
+    @Test
+    void loginWithEmptyEmail_OUT() {
+        User user = userService.login("", "pass123");
+        assert user == null;
+    }
+
+    @Test
+    void loginWithNullPassword_OUT() {
+        User user = userService.login("alice@example.com", null);
+        assert user == null;
+    }
+
+    @Test
+    void loginWithMalformedEmail_OUT() {
+        User user = userService.login("alice#example.com", "pass123"); // Invalid email format
+        assert user == null;
+    }
+
+    @Test
+    void loginWithWrongPassword_ON() {
+        User user = userService.login("alice@example.com", "wrongpass");
+        assert user == null;
+    }
+
+    @Test
+    void loginWithTypoInEmail_OFF() {
+        User user = userService.login("alcie@example.com", "pass123"); // typo: "alcie"
+        assert user == null;
+    }
+
+     */
+
 }

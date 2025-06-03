@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRepository implements IUserRepository {
-
+    //Mikkel og Allan
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
         User user = null;
@@ -39,7 +39,7 @@ public class UserRepository implements IUserRepository {
         }
         return user;
     }
-
+    //Sebastian
    @Override
     public User getUserDetails(User loggedInUser) {
         try (Connection conn = SqlConnection.getInstance()) {

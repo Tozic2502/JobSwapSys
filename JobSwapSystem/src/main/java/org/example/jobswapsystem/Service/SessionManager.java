@@ -1,7 +1,7 @@
 package org.example.jobswapsystem.Service;
 
 import org.example.jobswapsystem.Models.User;
-
+//Mikkel
 public class SessionManager implements ISessionManager {
     private User currentUser;
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CompanyService implements ICompanyService
 {
+    //Allan
     @Override
     public List<Company> getCompanies()
     {

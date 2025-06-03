@@ -24,8 +24,8 @@ public class JobSwapController {
     User currentUser = new User();
     MenuCreater menu = new MenuCreater();
     UserService userService = new UserService(new UserRepository());
-    SessionManager sessionManager = new SessionManager();
-    LoginService loginService = new LoginService(userService, sessionManager);
+    ISessionManager sessionManager = new SessionManager();
+    ILoginService loginService = new LoginService(userService, sessionManager);
     BorderPane root = menu.root;
 
     @FXML TextField emailTextField, passwordTextField;
@@ -37,6 +37,7 @@ public class JobSwapController {
     /**
      * Called after FXML is loaded. Sets up button/menu handlers.
      */
+    //Mikkel
     @FXML
     public void initialize() {
         handleHomeReturn();
@@ -49,6 +50,7 @@ public class JobSwapController {
      * Defines behavior when the Search label is clicked.
      * Clears the screen and displays the search view.
      */
+    //Mikkel
     public void handleSearch(){
         menu.searchLbl.setOnMouseClicked(e -> root.getChildren().clear());
         menu.searchLbl.setOnMouseClicked(e -> menu.topMenu());
@@ -69,6 +71,7 @@ public class JobSwapController {
      * Defines behavior when the Home label is clicked.
      * Clears the screen and returns to the home view.
      */
+    //Mikkel
     public void handleHomeReturn(){
         menu.homeLbl.setOnMouseClicked(e -> root.getChildren().clear());
         menu.homeLbl.setOnMouseClicked(e -> menu.createHomeScreen());
@@ -78,6 +81,7 @@ public class JobSwapController {
      * Called when the login button is pressed.
      * Authenticates the user, loads their home screen, and sets up UI with user info.
      */
+    //Mikkel
     @FXML
     public void onActionloginButton() {
         String email = emailTextField.getText();

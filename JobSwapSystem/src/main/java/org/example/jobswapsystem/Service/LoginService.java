@@ -1,7 +1,7 @@
 package org.example.jobswapsystem.Service;
 
 import org.example.jobswapsystem.Models.User;
-
+//Mikkel og Allan
 public class LoginService implements ILoginService {
     private final UserService userService;
     private final ISessionManager sessionManager;
