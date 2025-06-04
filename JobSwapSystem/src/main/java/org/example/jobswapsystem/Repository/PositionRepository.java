@@ -7,9 +7,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PositionRepository {
-
-    public List<Position> getAllPositions() {
+public class PositionRepository implements IPositionRepository
+{
+    /**
+     * Gets all job positions from database
+     * @return
+     */
+    @Override
+    public List<Position> getAllPositions()
+    {
         List<Position> positions = new ArrayList<>();
 
         try {
@@ -24,13 +30,15 @@ public class PositionRepository {
                 position.setJob_Title(rs.getString("Job_Title"));
                 positions.add(position);
             }
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Database error during select: " + e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.err.println("We encountered an error: " + e.getMessage());
         }
-
         return positions;
     }
 }

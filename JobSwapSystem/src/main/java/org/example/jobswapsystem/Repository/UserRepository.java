@@ -1,15 +1,14 @@
 package org.example.jobswapsystem.Repository;
 
-import org.example.jobswapsystem.Models.Address;
-import org.example.jobswapsystem.Models.Company;
-import org.example.jobswapsystem.Models.Position;
-import org.example.jobswapsystem.Models.User;
+import org.example.jobswapsystem.Models.*;
 import org.example.jobswapsystem.util.SqlConnection;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository implements IUserRepository {
     //Mikkel og Allan
@@ -39,6 +38,53 @@ public class UserRepository implements IUserRepository {
         }
         return user;
     }
+
+    /**
+     * Gets all job swap request entries from the database by user id.
+     * if the current user is the one receiving the request it will get it but,
+     * if the current user was the one sending the request it will only receive those
+     * where the receiving user has accepted the request
+     * @param loggedInUser
+     * @return
+     */
+    private void getUserSwapRequests(User loggedInUser)
+    {
+        List<Swap_Req> swap_reqs = new ArrayList<>();
+        try
+        {
+            Connection con = SqlConnection.getInstance();
+            String sql = "{ call SP_Get_Swap_Req(?) }";
+            CallableStatement stmt = con.prepareCall(sql);
+            stmt.setInt(1, loggedInUser.getUser_ID());
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Swap_Req swap_req = new Swap_Req();
+                swap_req.setUser1_ID(rs.getInt("User1_ID"));
+                swap_req.setUser2_ID(rs.getInt("User2_ID"));
+                swap_req.setUser2_Accept(rs.getBoolean("User2_Accept"));
+                if (loggedInUser.getUser_ID() == swap_req.getUser1_ID())
+                {
+                    swap_req.setUser1(loggedInUser);
+                }
+                else
+                {
+                    swap_req.setUser2(loggedInUser);
+                }
+                swap_reqs.add(swap_req);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error retrieving user swap requests " + e.getMessage());
+        }
+        finally
+        {
+            loggedInUser.setSwap_req(swap_reqs);
+        }
+    }
+
     //Sebastian
    @Override
     public User getUserDetails(User loggedInUser) {
@@ -67,14 +113,14 @@ public class UserRepository implements IUserRepository {
                             loggedInUser.setAddress(new Address());
                         }
                         loggedInUser.getAddress().setCity(rs.getString("City"));
-
-                        return loggedInUser;
                     }
                 }
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving user details: " + e.getMessage());
         }
+
+        getUserSwapRequests(loggedInUser);
 
         return loggedInUser;
     }

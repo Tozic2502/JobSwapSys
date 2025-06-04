@@ -18,10 +18,8 @@ import org.example.jobswapsystem.Service.SessionManager;
 import java.util.List;
 
 public class JobSwapController {
-    MatchService matchService = new MatchService();
     IPositionService positionService = new PositionService();
     ICompanyService companyService = new CompanyService();
-    User currentUser = new User();
     MenuCreater menu = new MenuCreater();
     UserService userService = new UserService(new UserRepository());
     ISessionManager sessionManager = new SessionManager();
@@ -107,7 +105,8 @@ public class JobSwapController {
      * Collects user info including email, password, job title, etc.
      */
     @FXML
-    public void registerButton() {
+    public void registerButton()
+    {
         Stage popupStage = new Stage();
         popupStage.setTitle("Registrer ny bruger");
 
@@ -142,7 +141,8 @@ public class JobSwapController {
         addressInput.setPromptText("Address");
 
         Button registerBtn = new Button("Registrer");
-        registerBtn.setOnAction(e -> {
+        registerBtn.setOnAction(e ->
+        {
             if (emailInput.getText().isEmpty() || passwordInput.getText().isEmpty() || nameInput.getText().isEmpty())
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

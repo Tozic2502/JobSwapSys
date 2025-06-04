@@ -12,8 +12,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserService implements IUserService {
-
+public class UserService implements IUserService
+{
     private final IUserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -29,7 +29,6 @@ public class UserService implements IUserService {
     }
 
     //Allan
-
     /**
      * takes user object and address object to create a new user entry in database and address
      *
@@ -37,8 +36,10 @@ public class UserService implements IUserService {
      * @param address
      */
     @Override
-    public void register(User user, Address address) {
-        try {
+    public void register(User user, Address address)
+    {
+        try
+        {
             Connection conn = SqlConnection.getInstance();
             String sql = "{ call SP_Register(?, ?, ?, ?, ?, ?, ?, ?) }";
 
@@ -53,15 +54,18 @@ public class UserService implements IUserService {
             stmt.setString(8, address.getCity());
 
             stmt.execute();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Database error during register: " + e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.err.println("We encountered an error: " + e.getMessage());
         }
     }
 
     //Allan
-
     /**
      * Takes user object witch within has the address to update user info with the new data
      *
@@ -69,8 +73,10 @@ public class UserService implements IUserService {
      * @return
      */
     @Override
-    public User UpdateUser(User user) {
-        try {
+    public User UpdateUser(User user)
+    {
+        try
+        {
             Connection conn = SqlConnection.getInstance();
             String sql = "{ call SP_UpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement stmt = conn.prepareCall(sql);
@@ -87,9 +93,13 @@ public class UserService implements IUserService {
             stmt.setString(11, user.getAddress().getCity());
 
             stmt.execute();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Database error during update: " + e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.err.println("We encountered an error: " + e.getMessage());
         }
         return user;
