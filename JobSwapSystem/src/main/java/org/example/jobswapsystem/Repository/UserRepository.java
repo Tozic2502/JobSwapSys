@@ -39,6 +39,18 @@ public class UserRepository implements IUserRepository {
         }
         return user;
     }
+    /**
+     * Retrieves and populates additional details for a given user from the database.
+     *
+     * <p>This method calls the stored procedure {@code GetUserDetails} using the provided user's ID,
+     * and populates the user's {@link Position}, {@link Company}, and {@link Address} fields with
+     * values retrieved from the result set.</p>
+     *
+     * @param loggedInUser The {@link User} object for which additional details are to be fetched.
+     *                     This object should contain at least the user's ID.
+     * @return The updated {@link User} object with additional details (job title, company name,
+     *         and city) populated if the user is found; otherwise returns the original object.
+     */
     //Sebastian
    @Override
     public User getUserDetails(User loggedInUser) {
@@ -48,7 +60,7 @@ public class UserRepository implements IUserRepository {
                 stmt.setInt(1, loggedInUser.getUser_ID());
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        // Set nested models
+                        // Initialize nested models if they are null
                         if (loggedInUser.getPosition() == null)
                         {
                             loggedInUser.setPosition(new Position());
